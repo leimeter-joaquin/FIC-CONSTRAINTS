@@ -1,16 +1,10 @@
-# class_1
-
-A new Flutter project.
+# Flutter Internal Course Class 1
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+- Luego de clonar el repo usamos: _flutter pub get_ para instalar las dependencias y corremos el proyecto con Visual Studio Code en android o iOS.
 
-A few resources to get you started if this is your first Flutter project:
+## Como usar
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Podemos ver ejemplos de como se relacionan los componentes, se encuentran explicados e los comentarios en el código fuente. También se
+recomienda ver esta parte de la documentación: https://docs.flutter.dev/development/ui/layout/constraints. Los ejemplos de este repo están basados en este artículo, pero el código al rededor de los ejemplos es mas sencillo que en el artículo para que cualquiera pueda leerlo y llevarse algo útil.
