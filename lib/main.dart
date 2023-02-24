@@ -22,6 +22,9 @@ class MyApp extends StatelessWidget {
               <Widget>[
                 Example1(),
                 Example2(),
+                Example3(),
+                Example4(),
+                Example5(),
               ],
             ),
           ),
@@ -44,7 +47,7 @@ class _ExamplesLayoutState extends State<ExamplesLayout> {
 
   void increment() {
     setState(() {
-      if (count < widget.examples.length) {
+      if (count != widget.examples.length) {
         count++;
       }
     });
@@ -52,7 +55,7 @@ class _ExamplesLayoutState extends State<ExamplesLayout> {
 
   void decrement() {
     setState(() {
-      if (count >= widget.examples.length) {
+      if (count != 1) {
         count--;
       }
     });
@@ -63,13 +66,7 @@ class _ExamplesLayoutState extends State<ExamplesLayout> {
     return Column(
       children: [
         Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.white,
-                width: 3,
-              ),
-            ),
+          child: SizedBox.expand(
             child: widget.examples[count - 1],
           ),
         ),
@@ -83,7 +80,7 @@ class _ExamplesLayoutState extends State<ExamplesLayout> {
             ),
             Text(
               '$count',
-              style: const TextStyle(color: Colors.red),
+              style: const TextStyle(color: Colors.white, fontSize: 24),
             ),
             FloatingActionButton(
               child: const Text('next'),
@@ -104,6 +101,8 @@ class Example1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.red,
+      height: 40,
+      width: 40,
     );
   }
 }
@@ -117,8 +116,97 @@ class Example2 extends StatelessWidget {
       child: Container(
         height: 40,
         width: 40,
-        color: Colors.green,
+        color: Colors.red,
       ),
+    );
+  }
+}
+
+class Example3 extends StatelessWidget {
+  const Example3({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        height: double.infinity,
+        width: double.infinity,
+        color: Colors.red,
+      ),
+    );
+  }
+}
+
+class Example4 extends StatelessWidget {
+  const Example4({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      // center le dice al hijo: "crecé tanto como quieras hasta w:390 y h:844"
+      child: Container(
+        // Container red dice: "okis, ya que tengo child le aviso a mi hijo 'Container blue' que sus constraints son maxWidth: 390 y maxHight: 844."
+        color: Colors.red,
+        child: Container(
+          // Container blue dice: "Como no tengo child, quisiera expanderme lo más posible, entonces como vos Container red, padre mío, me dejás expandierme hasta un maxWidth de 390 y un maxHeigth de 844 voy a hacer eso."
+          color: Colors.blue,
+        ),
+      ),
+    );
+  }
+}
+
+class Example5 extends StatelessWidget {
+  const Example5({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Switch between Column and Row
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          decoration: BoxDecoration(color: Colors.green),
+          width: 60,
+          height: 60,
+        ),
+        SizedBox(height: 20, width: 20),
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(color: Colors.green),
+            width: 60,
+            height: 6000, // These is ignored because of the Expanded parent.
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class Example6 extends StatelessWidget {
+  const Example6({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          decoration: BoxDecoration(color: Colors.green),
+          width: 60,
+          height: 60,
+        ),
+        SizedBox(height: 20),
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(color: Colors.green),
+            width: 60,
+            height: 10, // These is ignored because of the Expanded parent.
+          ),
+        ),
+      ],
     );
   }
 }
