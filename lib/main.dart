@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
                 Example3(),
                 Example4(),
                 Example5(),
+                Example6(),
               ],
             ),
           ),
@@ -42,21 +43,21 @@ class ExamplesLayout extends StatefulWidget {
 }
 
 class _ExamplesLayoutState extends State<ExamplesLayout> {
-  late int count = 1;
+  late int index = 1;
   late Widget example;
 
   void increment() {
     setState(() {
-      if (count != widget.examples.length) {
-        count++;
+      if (index != widget.examples.length) {
+        index++;
       }
     });
   }
 
   void decrement() {
     setState(() {
-      if (count != 1) {
-        count--;
+      if (index != 1) {
+        index--;
       }
     });
   }
@@ -67,7 +68,7 @@ class _ExamplesLayoutState extends State<ExamplesLayout> {
       children: [
         Expanded(
           child: SizedBox.expand(
-            child: widget.examples[count - 1],
+            child: widget.examples[index - 1],
           ),
         ),
         SizedBox(height: 20),
@@ -79,7 +80,7 @@ class _ExamplesLayoutState extends State<ExamplesLayout> {
               onPressed: () => decrement(),
             ),
             Text(
-              '$count',
+              '$index',
               style: const TextStyle(color: Colors.white, fontSize: 24),
             ),
             FloatingActionButton(
@@ -112,11 +113,17 @@ class Example2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 40,
-        width: 40,
-        color: Colors.red,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+          color: Colors
+              .transparent), //Cambiar el bg para mostrar e lugar que ocupa el center.
+      child: Center(
+        // El widget Center te deja posicionar un hijo dentro de la forma que quieras. El widget Center se expande para cubrir toda el area disponible. Podríamos usar un UnconstrainedBox en su lugar.
+        child: Container(
+          height: 40,
+          width: 40,
+          color: Colors.red,
+        ),
       ),
     );
   }
@@ -148,7 +155,7 @@ class Example4 extends StatelessWidget {
         // Container red dice: "okis, ya que tengo child le aviso a mi hijo 'Container blue' que sus constraints son maxWidth: 390 y maxHight: 844."
         color: Colors.red,
         child: Container(
-          // Container blue dice: "Como no tengo child, quisiera expanderme lo más posible, entonces como vos Container red, padre mío, me dejás expandierme hasta un maxWidth de 390 y un maxHeigth de 844 voy a hacer eso."
+          // Container blue dice: "Como no tengo child no voy a tener que pasar ningun constraint hacia abajo, quisiera expanderme lo más posible, entonces como vos Container red, padre mío, me dejás expandierme hasta un maxWidth de 390 y un maxHeigth de 844 voy a hacer eso."
           color: Colors.blue,
         ),
       ),
@@ -161,28 +168,21 @@ class Example5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Switch between Column and Row
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Container(
-          decoration: BoxDecoration(color: Colors.green),
-          width: 60,
-          height: 60,
+    return Center(
+      // center le dice al hijo: "crecé tanto como quieras hasta w:390 y h:844"
+      child: Container(
+        // Container red dice: "okis, ya que tengo child le aviso a mi hijo 'Container blue' que sus constraints son maxWidth: 390 y maxHight: 844."
+        color: Colors.red,
+        child: Container(
+          // Container blue dice: "Como no tengo child, no tengo que pasar constraints hacia abajo PERO si tengo un height declarado, por esta razón voy a tener esa altura pero voy a expandirme lo más posible hacia los costados."
+          color: Colors.blue,
+          height: 20,
         ),
-        SizedBox(height: 20, width: 20),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(color: Colors.green),
-            width: 60,
-            height: 6000, // These is ignored because of the Expanded parent.
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
+// Tener en cuenta que un Container renderiza un ConstrainedBox cuando tiene un height o width seteado.
 
 class Example6 extends StatelessWidget {
   const Example6({super.key});
@@ -201,7 +201,7 @@ class Example6 extends StatelessWidget {
         SizedBox(height: 20),
         Expanded(
           child: Container(
-            decoration: BoxDecoration(color: Colors.green),
+            decoration: BoxDecoration(color: Colors.orange),
             width: 60,
             height: 10, // These is ignored because of the Expanded parent.
           ),
