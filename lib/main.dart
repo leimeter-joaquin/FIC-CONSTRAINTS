@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
                 Example5(),
                 Example6(),
                 Example7(),
+                Example8(),
               ],
             ),
           ),
@@ -238,6 +240,55 @@ class Example7 extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// State and Image assets usage.
+class Example8 extends StatefulWidget {
+  const Example8({super.key});
+
+  @override
+  State<Example8> createState() => _Example8State();
+}
+
+class _Example8State extends State<Example8> {
+  Color color = Colors.white;
+
+  void toggleColor() {
+    setState(() {
+      if (color == Colors.white) {
+        color = Colors.red;
+        return;
+      }
+      color = Colors.white;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Image(
+          image: AssetImage('lib/assets/cute-dog.jpg'),
+        ),
+        Gap(20),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Some image'),
+              Icon(Icons.star, color: color),
+            ],
+          ),
+        ),
+        Gap(20),
+        TextButton(
+          onPressed: toggleColor,
+          child: const Text('Toggle'),
+        )
+      ],
     );
   }
 }
